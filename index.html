@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Tic Tac Toe</h1>
+            <div class="game-info">
+                <div class="status" id="status">Player X's turn</div>
+                <div class="score">
+                    <span>X: <span id="score-x">0</span></span>
+                    <span>O: <span id="score-o">0</span></span>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="game-board" id="game-board">
+                <div class="cell" data-cell></div>
+                <div class="cell" data-cell></div>
+                <div class="cell" data-cell></div>
+                <div class="cell" data-cell></div>
+                <div class="cell" data-cell></div>
+                <div class="cell" data-cell></div>
+                <div class="cell" data-cell></div>
+                <div class="cell" data-cell></div>
+                <div class="cell" data-cell></div>
+            </div>
+
+            <div class="controls">
+                <button id="restart-btn" class="btn btn-primary">Restart Game</button>
+                <button id="reset-score-btn" class="btn btn-secondary">Reset Score</button>
+            </div>
+        </main>
+
+        <div class="winning-message" id="winning-message">
+            <div class="winning-text" id="winning-text"></div>
+            <button id="play-again-btn" class="btn btn-primary">Play Again</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

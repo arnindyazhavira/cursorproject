@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Simple E-Commerce</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/checkout.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h2>ShopEasy</h2>
+                </div>
+                <nav class="nav">
+                    <ul class="nav-list">
+                        <li><a href="index.html" class="nav-link">Home</a></li>
+                        <li><a href="shop.html" class="nav-link">Shop</a></li>
+                        <li><a href="index.html#categories" class="nav-link">Categories</a></li>
+                        <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <div class="cart-icon" onclick="toggleCart()">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
+                    <div class="user-actions">
+                        <a href="login.html" class="btn btn-outline">Login</a>
+                        <a href="register.html" class="btn btn-primary">Register</a>
+                    </div>
+                    <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul class="mobile-nav-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="index.html#categories">Categories</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="register.html">Register</a></li>
+        </ul>
+    </div>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Shopping Cart</h3>
+            <button class="close-cart" onclick="toggleCart()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items will be dynamically added here -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotal">Rp 0</span>
+            </div>
+            <button class="btn btn-primary btn-full" onclick="goToCheckout()">
+                Checkout
+            </button>
+        </div>
+    </div>
+
+    <!-- Checkout Section -->
+    <section class="checkout-section">
+        <div class="container">
+            <div class="checkout-header">
+                <h1>Checkout</h1>
+                <p>Complete your purchase</p>
+            </div>
+
+            <div class="checkout-content">
+                <!-- Checkout Form -->
+                <div class="checkout-form">
+                    <form id="checkoutForm" onsubmit="placeOrder(event)">
+                        <!-- Shipping Information -->
+                        <div class="form-section">
+                            <h2><i class="fas fa-shipping-fast"></i> Shipping Information</h2>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="fullName">Full Name *</label>
+                                    <input type="text" id="fullName" name="fullName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone Number *</label>
+                                    <input type="tel" id="phone" name="phone" required>
+                                </div>
+                                <div class="form-group full-width">
+                                    <label for="address">Complete Address *</label>
+                                    <textarea id="address" name="address" rows="3" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="city">City *</label>
+                                    <input type="text" id="city" name="city" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="postalCode">Postal Code *</label>
+                                    <input type="text" id="postalCode" name="postalCode" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Payment Method -->
+                        <div class="form-section">
+                            <h2><i class="fas fa-credit-card"></i> Payment Method</h2>
+                            <div class="payment-methods">
+                                <div class="payment-option">
+                                    <input type="radio" id="bankTransfer" name="paymentMethod" value="bank" required>
+                                    <label for="bankTransfer">
+                                        <i class="fas fa-university"></i>
+                                        <div class="payment-info">
+                                            <span class="payment-title">Bank Transfer</span>
+                                            <span class="payment-desc">Transfer to our bank account</span>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="payment-option">
+                                    <input type="radio" id="ewallet" name="paymentMethod" value="ewallet" required>
+                                    <label for="ewallet">
+                                        <i class="fas fa-wallet"></i>
+                                        <div class="payment-info">
+                                            <span class="payment-title">E-Wallet</span>
+                                            <span class="payment-desc">OVO, DANA, GoPay</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Bank Transfer Details (shown when selected) -->
+                            <div id="bankDetails" class="payment-details" style="display: none;">
+                                <h3>Bank Transfer Details</h3>
+                                <div class="bank-info">
+                                    <p><strong>Bank:</strong> Bank Central Asia (BCA)</p>
+                                    <p><strong>Account Number:</strong> 1234567890</p>
+                                    <p><strong>Account Name:</strong> PT. ShopEasy Indonesia</p>
+                                    <p><strong>Transfer Amount:</strong> <span id="transferAmount">Rp 0</span></p>
+                                </div>
+                                <div class="upload-section">
+                                    <label for="paymentProof">Upload Payment Proof (Optional)</label>
+                                    <input type="file" id="paymentProof" name="paymentProof" accept="image/*">
+                                </div>
+                            </div>
+
+                            <!-- E-Wallet Details (shown when selected) -->
+                            <div id="ewalletDetails" class="payment-details" style="display: none;">
+                                <h3>E-Wallet Payment</h3>
+                                <div class="ewallet-options">
+                                    <label class="ewallet-option">
+                                        <input type="radio" name="ewalletType" value="ovo">
+                                        <span>OVO</span>
+                                    </label>
+                                    <label class="ewallet-option">
+                                        <input type="radio" name="ewalletType" value="dana">
+                                        <span>DANA</span>
+                                    </label>
+                                    <label class="ewallet-option">
+                                        <input type="radio" name="ewalletType" value="gopay">
+                                        <span>GoPay</span>
+                                    </label>
+                                </div>
+                                <p>You will receive payment instructions after placing your order.</p>
+                            </div>
+                        </div>
+
+                        <!-- Order Notes -->
+                        <div class="form-section">
+                            <h2><i class="fas fa-sticky-note"></i> Order Notes</h2>
+                            <div class="form-group">
+                                <label for="orderNotes">Additional Notes (Optional)</label>
+                                <textarea id="orderNotes" name="orderNotes" rows="3" placeholder="Any special instructions for delivery..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="form-actions">
+                            <a href="shop.html" class="btn btn-outline">Continue Shopping</a>
+                            <button type="submit" class="btn btn-primary btn-large">Place Order</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="order-summary">
+                    <div class="summary-header">
+                        <h2>Order Summary</h2>
+                    </div>
+                    <div class="summary-items" id="summaryItems">
+                        <!-- Order items will be loaded here -->
+                    </div>
+                    <div class="summary-totals">
+                        <div class="summary-row">
+                            <span>Subtotal:</span>
+                            <span id="subtotal">Rp 0</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Shipping:</span>
+                            <span id="shipping">Rp 0</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total:</span>
+                            <span id="total">Rp 0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Us</h3>
+                    <p>ShopEasy is your trusted online shopping destination. We provide quality products with excellent customer service.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="index.html#categories">Categories</a></li>
+                        <li><a href="orders.html">Order History</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p><i class="fas fa-phone"></i> +62 812-3456-7890</p>
+                    <p><i class="fas fa-envelope"></i> info@shopeasy.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Jakarta, Indonesia</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ShopEasy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script src="js/checkout.js"></script>
+</body>
+</html>
